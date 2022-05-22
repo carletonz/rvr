@@ -13,7 +13,7 @@ def read(uartPort):
 
 
 def write(uartPort, packet):
-    uartPort.write(packet.encodeData())
+    uartPort.write(packet.getEncodedData())
 
 
 def wakeCommand():
