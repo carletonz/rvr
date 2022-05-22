@@ -1,7 +1,6 @@
 import serial
 import src.constant as Constants
 from src.model.packet import Packet
-from sphero_sdk import SpheroRvrObserver
 
 
 def getUartPort():
@@ -11,6 +10,10 @@ def getUartPort():
 def read(uartPort):
     buf = uartPort.read_until(Constants.END_BYTE)
     return Packet.decodeData(buf)
+
+
+def write(uartPort, packet):
+    uartPort.write(packet.encodeData())
 
 
 def wakeCommand():
