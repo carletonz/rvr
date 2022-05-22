@@ -12,6 +12,9 @@ def read(uartPort):
     return Packet.decodeData(buf)
 
 
+def write(uartPort, packet):
+    uartPort.write(packet.encodeData())
+
 
 def wakeCommand():
     return Packet.builder()\
