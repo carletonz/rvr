@@ -1,4 +1,4 @@
-import src.constant as Constants
+import constant as Constants
 
 
 class Packet:

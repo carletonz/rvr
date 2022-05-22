@@ -1,6 +1,6 @@
 import serial
-import src.constant as Constants
-from src.model.packet import Packet
+import constant as Constants
+from model.packet import Packet
 
 
 def getUartPort():
