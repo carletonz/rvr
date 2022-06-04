@@ -8,7 +8,7 @@ def getUartPort():
 
 
 def read(uartPort):
-    buf = uartPort.read_until(Constants.END_BYTE)
+    buf = uartPort.read_until(bytearray([Constants.END_BYTE]))
     return Packet.decodeData(buf)
 
 
@@ -23,6 +23,28 @@ def wakeCommand():
         .cid(0x0d)\
         .requestResponseFlag()\
         .activityFlag()\
+        .build()
+
+
+def configureSensorStreamCommand(processor, sensor):
+    return Packet.builder() \
+        .tid(processor) \
+        .did(Constants.DEVICE_SENSOR) \
+        .cid(0x39) \
+        .requestResponseFlag() \
+        .activityFlag() \
+        .data([0x01, 0x00, sensor, 0x01]) \
+        .build()
+
+
+def startSensorStreamingCommand(processor):
+    return Packet.builder() \
+        .tid(processor) \
+        .did(Constants.DEVICE_SENSOR) \
+        .cid(0x3a) \
+        .requestResponseFlag() \
+        .activityFlag() \
+        .data([0x07, 0xd0]) \
         .build()
 
 
