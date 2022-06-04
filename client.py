@@ -2,14 +2,21 @@ import serial
 import constant as Constants
 from model.packet import Packet
 
+port = None
+lastResult = None
+
 
 def getUartPort():
-    return serial.Serial(Constants.UART_PORT, Constants.BAUD_RATE)
+    global port
+    port = serial.Serial(Constants.UART_PORT, Constants.BAUD_RATE)
+    return port
 
 
 def read(uartPort):
+    global lastResult
     buf = uartPort.read_until(bytearray([Constants.END_BYTE]))
-    return Packet.decodeData(buf)
+    lastResult = Packet.decodeData(bytearray(buf))
+    return lastResult
 
 
 def write(uartPort, packet):
