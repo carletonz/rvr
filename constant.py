@@ -2,6 +2,10 @@
 UART_PORT = "/dev/ttyS0"
 BAUD_RATE = 115200
 
+# Processors
+NORDIC = 0X01
+ST = 0X02
+
 # Packet flags
 IS_RESPONSE = 1
 REQUEST_RESPONSE = 2
@@ -63,4 +67,38 @@ ERROR_TO_NAME = {
     ERROR_BUSY: "The operation is already in progress or the module is busy",
     ERROR_BAD_TARGET_ID: "Target does not exist",
     ERROR_TARGET_UNAVAILABLE: "Target exists but is unavailable (e.g., it is asleep or disconnected)"
+}
+
+# Sensors
+COLOR_DETECTION = 0X0003
+AMBIENT_LIGHT = 0x000A
+QUATERNION = 0x0000
+IMU = 0x0001
+ACCELEROMETER = 0x0002
+GYROSCOPE = 0x0004
+LOCATOR = 0x0006
+VELOCITY = 0x0007
+SPEED = 0x0008
+ENCODERS = 0x000B
+CORE_TIME = 0x0009
+SENSOR_TO_NAME = {
+    COLOR_DETECTION: "Color Detection",
+    AMBIENT_LIGHT: "Ambient Light",
+    QUATERNION: "Quaternion",
+    IMU: "IMU",
+    ACCELEROMETER: "Accelerometer",
+    GYROSCOPE: "Gyroscope",
+    LOCATOR: "Locator",
+    VELOCITY: "Velocity",
+    SPEED: "Speed",
+    ENCODERS: "Encoders",
+    CORE_TIME: "Core Time"
+}
+ONE_BYTE_SIZE = 0X00
+TWO_BYTE_SIZE = 0X01
+FOUR_BYTE_SIZE = 0X02
+SIZE_TO_MAX_VALUE = {
+    ONE_BYTE_SIZE: 1,
+    TWO_BYTE_SIZE: 2,
+    FOUR_BYTE_SIZE: 4,
 }
