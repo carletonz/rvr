@@ -21,5 +21,9 @@ sensors.start()
 while True:
     rvr.writePacket(RVRClient.getWakeCommandPacket())
     packets = rvr.readPackets(1)
+
+    for packet in packets:
+        print(packet)
+
     if len(packets) > 0 and packets[0].did == Constants.DEVICE_SENSOR and packets[0].seq != 0:
         print(sensors.processPacket(packets[0]))
