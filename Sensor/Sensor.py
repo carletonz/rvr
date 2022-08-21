@@ -5,7 +5,7 @@ class Sensor:
 
     def __init__(self, sensorId, processor, size):
         if (sensorId, processor) in Sensor.ActiveSensors:
-            raise Exception("Sensor ID: " + sensorId + " and Processor: " + processor + " already exist")
+            raise Exception("Sensor ID: " + str(sensorId) + " and Processor: " + str(processor) + " already exist")
         self.sensorId = sensorId
         self.processor = processor
         self.name = Constants.SENSOR_TO_NAME[sensorId]
@@ -21,16 +21,16 @@ class Sensor:
     def decodeAttributes(self, data):
         decodedData = [0 for _ in self.attributes]
         for index, attribute in enumerate(self.attributes):
-            value = int.to_bytes(data[self._getSlice(index)], "big")
+            value = int.from_bytes(data[self._getSlice(index)], "big")
             decodedData[index] = self._normalizeValue(attribute.minRange, attribute.maxRange, value)
         return decodedData
 
     def _normalizeValue(self, minRange, maxRange, value):
-        numBytes = Constants.SIZE_TO_NUM_BYTES[self.dataSize]
-        byteMax = int.to_bytes(bytearray([0xff for _ in range(numBytes)]), "big")
+        numBytes = Constants.SIZE_TO_MAX_VALUE[self.dataSize]
+        byteMax = int.from_bytes([0xff for _ in range(numBytes)], "big")
         return (value / byteMax) * (maxRange - minRange) + minRange
 
     def _getSlice(self, index):
-        num_bytes = Constants.SIZE_TO_NUM_BYTES[self.dataSize]
+        num_bytes = Constants.SIZE_TO_MAX_VALUE[self.dataSize]
         return slice(num_bytes*index, num_bytes*(index+1))
 
