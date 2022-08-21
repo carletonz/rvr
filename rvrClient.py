@@ -8,6 +8,7 @@ class RVRClient:
         self.serialPort = serialPort
 
     def writePacket(self, packet):
+        print(packet)
         self.serialPort.write(packet.getEncodedData())
 
     def readPackets(self, maxPackets=Constants.MAX_PACKETS_TO_READ):
