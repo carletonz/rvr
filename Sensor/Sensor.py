@@ -3,24 +3,20 @@ import constant as Constants
 class Sensor:
     ActiveSensors = {}
 
-    def __init__(self, sensorId, processor, name, attributes):
+    def __init__(self, sensorId, processor, size):
         if Sensor.ActiveSensors[(sensorId, processor)]:
             raise Exception("Sensor ID: " + sensorId + " and Processor: " + processor + " already exist")
         self.sensorId = sensorId
         self.processor = processor
-        self.name = name
-        self.attributes = attributes
+        self.name = Constants.SENSOR_TO_NAME[sensorId]
+        self.attributes = Constants.SENSOR_ATTRIBUTES[sensorId]
         self.streamToken = None
-        self.dataSize = None
-        self.attributeSize = None
+        self.dataSize = size
+        self.attributeSize = Constants.SIZE_TO_NUM_BYTES[size] * self.attributes.length
         Sensor.ActiveSensors[(sensorId, processor)] = self
 
     def setStreamId(self, streamToken):
         self.streamToken = streamToken
-
-    def setDataSize(self, size):
-        self.dataSize = size
-        self.attributeSize = Constants.SIZE_TO_NUM_BYTES[size]*self.attributes.length
 
     def decodeAttributes(self, data):
         decodedData = [0 for _ in self.attributes]

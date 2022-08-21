@@ -1,6 +1,10 @@
+from model.attribute import Attribute
+
 # UART Port Settings
 UART_PORT = "/dev/ttyS0"
 BAUD_RATE = 115200
+
+MAX_PACKETS_TO_READ = 5
 
 # Processors
 NORDIC = 0X01
@@ -70,17 +74,30 @@ ERROR_TO_NAME = {
 }
 
 # Sensors
-COLOR_DETECTION = 0X0003
-AMBIENT_LIGHT = 0x000A
-QUATERNION = 0x0000
-IMU = 0x0001
-ACCELEROMETER = 0x0002
-GYROSCOPE = 0x0004
-LOCATOR = 0x0006
-VELOCITY = 0x0007
-SPEED = 0x0008
-ENCODERS = 0x000B
-CORE_TIME = 0x0009
+COLOR_DETECTION = (0X00, 0x03)
+AMBIENT_LIGHT = (0x00, 0x0A)
+QUATERNION = (0x00, 0x00)
+IMU = (0x00, 0x01)
+ACCELEROMETER = (0x00, 0x02)
+GYROSCOPE = (0x00, 0x04)
+LOCATOR = (0x00, 0x06)
+VELOCITY = (0x00, 0x07)
+SPEED = (0x00, 0x08)
+ENCODERS = (0x00, 0x0B)
+CORE_TIME = (0x00, 0x09)
+SENSOR_ATTRIBUTES = {
+    COLOR_DETECTION: [Attribute(0, 255), Attribute(0, 255), Attribute(0, 255), Attribute(0, 255), Attribute(0, 1)],  # [R, G, B, Index, Confidence]
+    AMBIENT_LIGHT: [Attribute(0, 120000)],  # [Light]
+    QUATERNION: [Attribute(-1, 1), Attribute(-1, 1), Attribute(-1, 1), Attribute(-1, 1)],  # [W, X, Y, Z]
+    IMU: [Attribute(-180, 180), Attribute(-90, 90), Attribute(-180, 180)],  # [Pitch, Roll, Yaw]
+    ACCELEROMETER: [Attribute(-16, 16), Attribute(-16, 16), Attribute(-16, 16)],  # [X, Y, Z]
+    GYROSCOPE: [Attribute(-2000, 2000), Attribute(-2000, 2000), Attribute(-2000, 2000)],  # [X, Y, Z]
+    LOCATOR: [Attribute(-16000, 16000), Attribute(-16000, 16000)],  # [X, Y]
+    VELOCITY: [Attribute(-5, 5), Attribute(-5, 5)],  # [X, Y]
+    SPEED: [Attribute(0, 5)],  # [Speed]
+    ENCODERS: [Attribute(0, 4294967295), Attribute(0, 4294967295)],  # [LeftTicks, RightTicks]
+    CORE_TIME: [Attribute(0, 4294967295), Attribute(0, 4294967295)]  # [TimeUpper, TimeLower]
+}
 SENSOR_TO_NAME = {
     COLOR_DETECTION: "Color Detection",
     AMBIENT_LIGHT: "Ambient Light",
@@ -102,3 +119,5 @@ SIZE_TO_MAX_VALUE = {
     TWO_BYTE_SIZE: 2,
     FOUR_BYTE_SIZE: 4,
 }
+MAX_SENSORS_PER_STREAM = 5
+SENSOR_PUBLISH_RATE = [0x07, 0xd0]  # 2000 milliseconds

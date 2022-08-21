@@ -81,3 +81,18 @@ streaming service configuration for RVR:
 # [0x8d, 0x18, 0x01, 0x18, 0x3a, 0x03, 0x07, 0xd0, 0xba, 0xd8]
 # - data = 2 unsigned bytes representing rate data should be published at
 # - in ex above rate is 2000 (2 seconds)
+
+
+'''
+Design
+
+Inputs: RVR serial port, camera, ros topics/services, etc
+
+data processors: distributors (breaks down data from different inputs and directs them to the next data processor),
+sensor service, sensor stream, sensors, etc
+
+outputs: RVR serial port, ros topics/services, etc
+
+
+
+'''
