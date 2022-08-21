@@ -25,5 +25,4 @@ class SensorService:
         self.rvrClient.writePacket(sensorStreamStartPacket)
 
     def processPacket(self, packet):
-        print(packet)
         return self.streams[packet.data[0]-1].decodeData(packet.data[1:])

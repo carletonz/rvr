@@ -8,7 +8,6 @@ class RVRClient:
         self.serialPort = serialPort
 
     def writePacket(self, packet):
-        print(packet)
         self.serialPort.write(packet.getEncodedData())
 
     def readPackets(self, maxPackets=Constants.MAX_PACKETS_TO_READ):
@@ -17,8 +16,12 @@ class RVRClient:
             if self.serialPort.in_waiting > 0:
                 raw_data = self.serialPort.read_until(bytearray([Constants.END_BYTE]))
                 start_index = raw_data.index(Constants.START_BYTE)
-                decoded_data = Packet.decodeData(bytearray(raw_data[start_index:]))
-                output.append(decoded_data)
+                try:
+                    decoded_data = Packet.decodeData(bytearray(raw_data[start_index:]))
+                    output.append(decoded_data)
+                except Exception as e:
+                    print("Error while parsing raw data: " + str(e))
+                    print(raw_data)
         return output
 
     @staticmethod
