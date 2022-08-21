@@ -19,7 +19,7 @@ rvr.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
 sensors.start()
 
 while True:
-    rvr.writePacket(RVRClient.getWakeCommandPacket(Constants.ST))
+    rvr.writePacket(RVRClient.getWakeCommandPacket())
     packets = rvr.readPackets(1)
     if len(packets) > 0 and packets[0].did == Constants.DEVICE_SENSOR:
         print(sensors.processPacket(packets[0]))
