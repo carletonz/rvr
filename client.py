@@ -14,12 +14,12 @@ def getUartPort():
 
 
 rvr = RVRClient(getUartPort())
+rvr.writePacket(RVRClient.getWakeCommandPacket())
 sensors = SensorService(rvr)
 rvr.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
 sensors.start()
 
 while True:
-    #rvr.writePacket(RVRClient.getWakeCommandPacket())
     packets = rvr.readPackets(1)
 
     for packet in packets:
