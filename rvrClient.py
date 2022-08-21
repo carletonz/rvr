@@ -16,7 +16,8 @@ class RVRClient:
         for i in range(maxPackets):
             if self.serialPort.in_waiting > 0:
                 raw_data = self.serialPort.read_until(bytearray([Constants.END_BYTE]))
-                decoded_data = Packet.decodeData(bytearray(raw_data))
+                start_index = raw_data.index(Constants.START_BYTE)
+                decoded_data = Packet.decodeData(bytearray(raw_data[start_index:]))
                 output.append(decoded_data)
         return output
 
@@ -105,6 +106,9 @@ sensor service, sensor stream, sensors, etc
 
 outputs: RVR serial port, ros topics/services, etc
 
+
+321676fd0842c0b407119310a3
+320e65fa35ff321666fd08448377138f6d08f9
 
 
 '''
