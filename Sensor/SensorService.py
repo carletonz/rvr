@@ -1,5 +1,5 @@
-from SensorStream import SensorStream
-from Sensor import Sensor
+from Sensor.SensorStream import SensorStream
+from Sensor.Sensor import Sensor
 import constant as Constants
 from rvrClient import RVRClient
 
