@@ -12,7 +12,7 @@ class Sensor:
         self.attributes = Constants.SENSOR_ATTRIBUTES[sensorId]
         self.streamToken = None
         self.dataSize = size
-        self.attributeSize = Constants.SIZE_TO_NUM_BYTES[size] * self.attributes.length
+        self.attributeSize = Constants.SIZE_TO_MAX_VALUE[size] * self.attributes.length
         Sensor.ActiveSensors[(sensorId, processor)] = self
 
     def setStreamId(self, streamToken):
