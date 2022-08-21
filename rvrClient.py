@@ -15,8 +15,8 @@ class RVRClient:
         for i in range(maxPackets):
             if self.serialPort.in_waiting > 0:
                 raw_data = self.serialPort.read_until(bytearray([Constants.END_BYTE]))
-                start_index = raw_data.index(Constants.START_BYTE)
                 try:
+                    start_index = raw_data.index(Constants.START_BYTE)
                     decoded_data = Packet.decodeData(bytearray(raw_data[start_index:]))
                     output.append(decoded_data)
                 except Exception as e:
