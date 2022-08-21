@@ -4,7 +4,7 @@ class Sensor:
     ActiveSensors = {}
 
     def __init__(self, sensorId, processor, size):
-        if Sensor.ActiveSensors[(sensorId, processor)]:
+        if (sensorId, processor) in Sensor.ActiveSensors:
             raise Exception("Sensor ID: " + sensorId + " and Processor: " + processor + " already exist")
         self.sensorId = sensorId
         self.processor = processor
