@@ -12,7 +12,7 @@ class SensorService:
 
     def setUp(self):
         ## todo: make this idiot proof
-        stream_zero = SensorStream(0, Constants.ST)
+        stream_zero = SensorStream(1, Constants.ST)
         stream_zero.addSensor(Sensor(Constants.ACCELEROMETER, Constants.ST, Constants.FOUR_BYTE_SIZE))
 
         self.streams.append(stream_zero)
@@ -26,4 +26,4 @@ class SensorService:
 
     def processPacket(self, packet):
         print(packet)
-        return self.streams[packet.data[0]].decodeData(packet.data[1:])
+        return self.streams[packet.data[0]-1].decodeData(packet.data[1:])
