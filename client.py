@@ -10,6 +10,7 @@ lastResult = None
 def getUartPort():
     global port
     port = serial.Serial(Constants.UART_PORT, Constants.BAUD_RATE)
+    port.flushInput()
     return port
 
 
