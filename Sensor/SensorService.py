@@ -11,6 +11,7 @@ class SensorService:
         self.setUp()
 
     def setUp(self):
+        ## todo: make this idiot proof
         stream_zero = SensorStream(0, Constants.ST)
         stream_zero.addSensor(Sensor(Constants.ACCELEROMETER, Constants.ST, Constants.ONE_BYTE_SIZE))
 
@@ -23,4 +24,5 @@ class SensorService:
         sensorStreamStartPacket = RVRClient.getStartSensorStreamingPacket(Constants.ST)
         self.rvrClient.writePacket(sensorStreamStartPacket)
 
-    def
+    def processPacket(self, packet):
+        return self.streams[packet.data[0]].decodeData(packet.data[1:])
