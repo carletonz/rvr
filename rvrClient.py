@@ -65,6 +65,18 @@ class RVRClient:
             .build()
 
     @staticmethod
+    def getSetRawMotorsPacket(leftMode, leftDutyCycle, rightMode, rightDutyCycle, processor):
+        #TODO: add data validation to make sure that data is correct size
+        return Packet.builder() \
+            .tid(processor) \
+            .did(Constants.DEVICE_DRIVE) \
+            .cid(0x01) \
+            .requestResponseFlag() \
+            .activityFlag() \
+            .data([leftMode, leftDutyCycle, rightMode, rightDutyCycle]) \
+            .build()
+
+    @staticmethod
     def getStopSensorStreamingPacket(processor):
         return Packet.builder() \
             .tid(processor) \
