@@ -1,20 +1,24 @@
 import serial
 import constant as Constants
 from model.packet import Packet
-
+from threading import Lock
 
 class RVRClient:
     def __init__(self, serialPort):
         self.serialPort = serialPort
+        self.readLock = Lock()
+        self.writeLock = Lock()
 
     def writePacket(self, packet):
-        self.serialPort.write(packet.getEncodedData())
+        with self.writeLock:
+            self.serialPort.write(packet.getEncodedData())
 
     def readPackets(self, maxPackets=Constants.MAX_PACKETS_TO_READ):
         output = []
         for i in range(maxPackets):
             if self.serialPort.in_waiting > 0:
-                raw_data = self.serialPort.read_until(bytearray([Constants.END_BYTE]))
+                with self.readLock:
+                    raw_data = self.serialPort.read_until(bytearray([Constants.END_BYTE]))
                 try:
                     start_index = raw_data.index(Constants.START_BYTE)
                     decoded_data = Packet.decodeData(bytearray(raw_data[start_index:]))

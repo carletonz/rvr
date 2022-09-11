@@ -17,28 +17,45 @@ from rclpy.node import Node
 
 from std_msgs.msg import Int16MultiArray
 
+import serial
+import constant as Constants
+from rvrClient import RVRClient
+from Sensor.SensorService import SensorService
+from Sensor.Sensor import Sensor
+
 
 class MinimalPublisher(Node):
 
-    def __init__(self):
+    def __init__(self, rvrClient):
         super().__init__('minimal_publisher')
-        self.publisher_ = self.create_publisher(Int16MultiArray, 'topic', 10)
-        timer_period = 0.5  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
-        self.i = 0
+        self.publisherImuSensor = self.create_publisher(Int16MultiArray, Constants.SENSOR_TO_NAME[Constants.IMU], 10)
+        self.rvrClient = rvrClient
+        self.sensors = SensorService(rvrClient)
+        rvrClient.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
+        self.sensors.start()
 
     def timer_callback(self):
-        msg = Int16MultiArray()
-        msg.data = [self.i, 2, 3, 4]
-        self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
-        self.i += 1
+        self.rvrClient.writePacket(RVRClient.getWakeCommandPacket())
+        packets = self.rvrClient.readPackets(1)
+        if len(packets) > 0 and packets[0].did == Constants.DEVICE_SENSOR and packets[0].seq != 0:
+            self.sensors.processPacket(packets[0])
 
+        if Sensor.ActiveSensors[(Constants.IMU, Constants.ST)]:
+            msg = Int16MultiArray()
+            msg.data = Sensor.ActiveSensors[(Constants.IMU, Constants.ST)].decodedData
+            self.publisherImuSensor.publish(msg)
+
+
+
+def getUartPort():
+    port = serial.Serial(Constants.UART_PORT, Constants.BAUD_RATE)
+    port.flushInput()
+    return port
 
 def main(args=None):
     rclpy.init(args=args)
-
-    minimal_publisher = MinimalPublisher()
+    rvr = RVRClient(getUartPort())
+    minimal_publisher = MinimalPublisher(rvr)
 
     rclpy.spin(minimal_publisher)
 

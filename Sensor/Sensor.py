@@ -13,17 +13,16 @@ class Sensor:
         self.streamToken = None
         self.dataSize = size
         self.attributeSize = Constants.SIZE_TO_MAX_VALUE[size] * len(self.attributes)
+        self.decodedData = [0 for _ in self.attributes]
         Sensor.ActiveSensors[(sensorId, processor)] = self
 
     def setStreamId(self, streamToken):
         self.streamToken = streamToken
 
     def decodeAttributes(self, data):
-        decodedData = [0 for _ in self.attributes]
         for index, attribute in enumerate(self.attributes):
             value = int.from_bytes(data[self._getSlice(index)], "big")
-            decodedData[index] = self._normalizeValue(attribute.minRange, attribute.maxRange, value)
-        return decodedData
+            self.decodedData[index] = self._normalizeValue(attribute.minRange, attribute.maxRange, value)
 
     def _normalizeValue(self, minRange, maxRange, value):
         numBytes = Constants.SIZE_TO_MAX_VALUE[self.dataSize]
