@@ -3,6 +3,7 @@ import constant as Constants
 from rvrClient import RVRClient
 from Sensor.SensorService import SensorService
 import time
+import psutil
 
 port = None
 lastResult = None
@@ -15,6 +16,13 @@ def getUartPort():
     return port
 
 
+while True:
+    print(psutil.cpu_percent())
+    print(psutil.virtual_memory().percent)
+    time.sleep(0.5)
+
+
+'''
 rvr = RVRClient(getUartPort())
 sensors = SensorService(rvr)
 rvr.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
@@ -47,3 +55,4 @@ finally:
     rvr.writePacket(RVRClient.getSetRawMotorsPacket(Constants.MODE_OFF, 0,
                                                     Constants.MODE_OFF, 0,
                                                     Constants.ST))
+'''
