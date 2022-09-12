@@ -47,6 +47,7 @@ try:
             print(p)
         time.sleep(1)
 finally:
+    print("error happened, in finally section")
     rvr.writePacket(RVRClient.getSetRawMotorsPacket(Constants.MODE_OFF, 0,
                                                     Constants.MODE_OFF, 0,
                                                     Constants.ST))
