@@ -42,9 +42,9 @@ try:
                                                             Constants.ST))
         leftSpeed += 1
         rightSpeed += 1
-        rvr.readPackets(10)
-        print(psutil.cpu_percent())
-        print(psutil.virtual_memory().percent)
+        packets = rvr.readPackets(10)
+        for p in packets:
+            print(p)
         time.sleep(1)
 finally:
     rvr.writePacket(RVRClient.getSetRawMotorsPacket(Constants.MODE_OFF, 0,
