@@ -16,13 +16,6 @@ def getUartPort():
     return port
 
 
-while True:
-    print(psutil.cpu_percent())
-    print(psutil.virtual_memory().percent)
-    time.sleep(0.5)
-
-
-'''
 rvr = RVRClient(getUartPort())
 sensors = SensorService(rvr)
 rvr.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
@@ -50,9 +43,11 @@ try:
         leftSpeed += 1
         rightSpeed += 1
         rvr.readPackets(10)
+        print(psutil.cpu_percent())
+        print(psutil.virtual_memory().percent)
         time.sleep(1)
 finally:
     rvr.writePacket(RVRClient.getSetRawMotorsPacket(Constants.MODE_OFF, 0,
                                                     Constants.MODE_OFF, 0,
                                                     Constants.ST))
-'''
+
