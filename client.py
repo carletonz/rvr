@@ -20,8 +20,8 @@ sensors = SensorService(rvr)
 rvr.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
 sensors.start()
 
-leftSpeed =
-rightSpeed = 0
+leftSpeed = 50
+rightSpeed = 50
 
 try:
     while True:
