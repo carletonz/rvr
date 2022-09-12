@@ -19,8 +19,23 @@ sensors = SensorService(rvr)
 rvr.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
 sensors.start()
 
+leftSpeed = 0
+rightSpeed = 0
+
+
 while True:
     rvr.writePacket(RVRClient.getWakeCommandPacket())
-    packets = rvr.readPackets(1)
-    if len(packets) > 0 and packets[0].did == Constants.DEVICE_SENSOR and packets[0].seq != 0:
-        print(sensors.processPacket(packets[0]))
+
+    if leftSpeed == 100:
+        leftSpeed = 0
+        rightSpeed = 0
+        rvr.writePacket(RVRClient.getSetRawMotorsPacket(Constants.MODE_OFF, leftSpeed,
+                                                        Constants.MODE_OFF, rightSpeed,
+                                                        Constants.ST))
+    else:
+        rvr.writePacket(RVRClient.getSetRawMotorsPacket(Constants.MODE_FORWARD, leftSpeed,
+                                                        Constants.MODE_FORWARD, rightSpeed,
+                                                        Constants.ST))
+    leftSpeed += 1
+    rightSpeed += 1
+    rvr.readPackets(10)
