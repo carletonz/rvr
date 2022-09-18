@@ -53,4 +53,5 @@ finally:
     rvr.writePacket(RVRClient.getSetRawMotorsPacket(Constants.MODE_OFF, 0,
                                                     Constants.MODE_OFF, 0,
                                                     Constants.ST))
+    rvr.closePort()
 

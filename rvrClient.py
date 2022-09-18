@@ -9,6 +9,9 @@ class RVRClient:
         self.readLock = Lock()
         self.writeLock = Lock()
 
+    def closePort(self):
+        self.serialPort.close()
+
     def writePacket(self, packet):
         with self.writeLock:
             self.serialPort.write(packet.getEncodedData())
