@@ -24,9 +24,10 @@ rvr = RVRClient(getUartPort())
 leftSpeed = 50
 rightSpeed = 50
 
+rvr.writePacket(RVRClient.getWakeCommandPacket())
+
 try:
     while True:
-        # rvr.writePacket(RVRClient.getWakeCommandPacket())
 
         if leftSpeed == 75:
             leftSpeed = 0
