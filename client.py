@@ -44,7 +44,8 @@ try:
         rightSpeed += 1
         packets = rvr.readPackets(10)
         for p in packets:
-            print(p)
+            if p.err != Constants.ERROR_SUCCESS:
+                print(p)
         time.sleep(1)
 finally:
     print("error happened, in finally section")
