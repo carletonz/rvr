@@ -26,7 +26,7 @@ rightSpeed = 50
 
 try:
     while True:
-        rvr.writePacket(RVRClient.getWakeCommandPacket())
+        # rvr.writePacket(RVRClient.getWakeCommandPacket())
 
         if leftSpeed == 75:
             leftSpeed = 0
