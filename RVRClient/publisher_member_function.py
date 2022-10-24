@@ -38,6 +38,7 @@ class MinimalPublisher(Node):
         self.rvrClient.writePacket(RVRClient.getWakeCommandPacket())
         packets = self.rvrClient.readPackets(1)
         if len(packets) > 0 and packets[0].did == Constants.DEVICE_SENSOR and packets[0].seq != 0:
+            print(packets[0])
             self.sensors.processPacket(packets[0])
 
         if Sensor.ActiveSensors[(Constants.IMU, Constants.ST)]:
