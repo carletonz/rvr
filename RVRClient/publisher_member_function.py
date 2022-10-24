@@ -20,8 +20,8 @@ from std_msgs.msg import Int16MultiArray
 import serial
 import RVRClient.constant as Constants
 from RVRClient.rvrClient import RVRClient
-from Sensor.SensorService import SensorService
-from Sensor.Sensor import Sensor
+from RVRClient.Sensor.SensorService import SensorService
+from RVRClient.Sensor.Sensor import Sensor
 
 
 class MinimalPublisher(Node):
