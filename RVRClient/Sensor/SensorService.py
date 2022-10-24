@@ -1,7 +1,7 @@
-from Sensor.SensorStream import SensorStream
-from Sensor.Sensor import Sensor
-import constant as Constants
-from rvrClient import RVRClient
+from RVRClient.Sensor.SensorStream import SensorStream
+from RVRClient.Sensor.Sensor import Sensor
+import RVRClient.constant as Constants
+from RVRClient.rvrClient import RVRClient
 
 # handles multiple sensors streams
 class SensorService:

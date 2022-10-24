@@ -1,6 +1,6 @@
 import serial
-import constant as Constants
-from model.packet import Packet
+import RVRClient.constant as Constants
+from RVRClient.model.packet import Packet
 from threading import Lock
 
 class RVRClient:

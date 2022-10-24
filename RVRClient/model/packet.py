@@ -1,4 +1,4 @@
-import constant as Constants
+import RVRClient.constant as Constants
 
 
 class Packet:

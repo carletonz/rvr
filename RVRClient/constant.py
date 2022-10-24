@@ -1,4 +1,4 @@
-from model.attribute import Attribute
+from RVRClient.model.attribute import Attribute
 
 # UART Port Settings
 UART_PORT = "/dev/ttyS0"
