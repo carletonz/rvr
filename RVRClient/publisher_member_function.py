@@ -18,8 +18,8 @@ from rclpy.node import Node
 from std_msgs.msg import Int16MultiArray
 
 import serial
-import constant as Constants
-from rvrClient import RVRClient
+import RVRClient.constant as Constants
+from RVRClient.rvrClient import RVRClient
 from Sensor.SensorService import SensorService
 from Sensor.Sensor import Sensor
 
