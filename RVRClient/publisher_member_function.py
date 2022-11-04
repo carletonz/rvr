@@ -15,7 +15,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import Int16MultiArray
+from std_msgs.msg import Float32MultiArray
 
 import serial
 import RVRClient.constant as Constants
@@ -28,7 +28,7 @@ class MinimalPublisher(Node):
 
     def __init__(self, rvrClient):
         super().__init__('minimal_publisher')
-        self.publisherImuSensor = self.create_publisher(Int16MultiArray, Constants.SENSOR_TO_NAME[Constants.IMU], 10)
+        self.publisherImuSensor = self.create_publisher(Float32MultiArray, Constants.SENSOR_TO_NAME[Constants.IMU], 10)
         self.rvrClient = rvrClient
         self.sensors = SensorService(rvrClient)
         rvrClient.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
@@ -44,7 +44,7 @@ class MinimalPublisher(Node):
             self.sensors.processPacket(packets[0])
 
         if Sensor.ActiveSensors[(Constants.IMU, Constants.ST)]:
-            msg = Int16MultiArray()
+            msg = Float32MultiArray()
             msg.data = Sensor.ActiveSensors[(Constants.IMU, Constants.ST)].decodedData
             self.publisherImuSensor.publish(msg)
 
