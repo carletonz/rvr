@@ -45,6 +45,7 @@ class MinimalPublisher(Node):
 
         if Sensor.ActiveSensors[(Constants.IMU, Constants.ST)]:
             msg = Float32MultiArray()
+            print(Sensor.ActiveSensors[(Constants.IMU, Constants.ST)].decodedData)
             msg.data = Sensor.ActiveSensors[(Constants.IMU, Constants.ST)].decodedData
             self.publisherImuSensor.publish(msg)
 
