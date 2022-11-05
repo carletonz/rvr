@@ -9,8 +9,13 @@ class RVRClient:
         self.readLock = Lock()
         self.writeLock = Lock()
 
+    def __del__(self):
+        self.closePort()
+
     def closePort(self):
-        self.serialPort.close()
+        if self.serialPort.is_open:
+            self.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
+            self.serialPort.close()
 
     def writePacket(self, packet):
         with self.writeLock:

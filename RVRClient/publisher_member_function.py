@@ -45,8 +45,8 @@ class MinimalPublisher(Node):
 
         if Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)]:
             msg = Float32MultiArray()
-            print(Sensor.ActiveSensors[(Constants.IMU, Constants.ST)].decodedData)
-            msg.data = Sensor.ActiveSensors[(Constants.IMU, Constants.ST)].decodedData
+            print(Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)].decodedData)
+            msg.data = Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)].decodedData
             self.publisherImuSensor.publish(msg)
 
 
@@ -68,6 +68,7 @@ def main(args=None):
     # when the garbage collector destroys the node object)
     minimal_publisher.destroy_node()
     rclpy.shutdown()
+    rvr.closePort()
 
 
 if __name__ == '__main__':
