@@ -33,14 +33,14 @@ class MinimalPublisher(Node):
         self.sensors = SensorService(rvrClient)
         rvrClient.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
         self.sensors.start()
-        timer_period = 0.5  # seconds
+        timer_period = 10  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
     def timer_callback(self):
         self.rvrClient.writePacket(RVRClient.getWakeCommandPacket())
         packets = self.rvrClient.readPackets(1)
         if len(packets) > 0 and packets[0].did == Constants.DEVICE_SENSOR and packets[0].seq != 0:
-            print(packets[0])
+            print(packets[0].getEncodedData())
             self.sensors.processPacket(packets[0])
 
         if Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)]:
