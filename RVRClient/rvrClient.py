@@ -23,7 +23,7 @@ class RVRClient:
     def writePacket(self, packet):
         with self.writeLock:
             if self.debugLog:
-                print("Writing packet:", packet.getEncodedData())
+                print('Writing bytes: [{}]'.format(', '.join('0x{:02x}'.format(x) for x in packet.getEncodedData())))
             self.serialPort.write(packet.getEncodedData())
 
     def readPackets(self, maxPackets=Constants.MAX_PACKETS_TO_READ):
