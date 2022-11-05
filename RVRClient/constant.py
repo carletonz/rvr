@@ -120,7 +120,7 @@ SIZE_TO_MAX_VALUE = {
     FOUR_BYTE_SIZE: 4,
 }
 MAX_SENSORS_PER_STREAM = 5
-SENSOR_PUBLISH_RATE = [0x07, 0xd0]  # 2000 milliseconds
+SENSOR_PUBLISH_RATE = [0x01, 0xF4]  # 500 milliseconds
 
 # Motors
 MODE_OFF = 0X00
