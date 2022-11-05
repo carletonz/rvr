@@ -58,7 +58,7 @@ def getUartPort():
 
 def main(args=None):
     rclpy.init(args=args)
-    rvr = RVRClient(getUartPort())
+    rvr = RVRClient(getUartPort(), True)
     minimal_publisher = MinimalPublisher(rvr)
 
     rclpy.spin(minimal_publisher)
