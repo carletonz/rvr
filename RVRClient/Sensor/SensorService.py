@@ -13,7 +13,7 @@ class SensorService:
     def setUp(self):
         ## todo: make this idiot proof
         stream_zero = SensorStream(1, Constants.ST)
-        stream_zero.addSensor(Sensor(Constants.IMU, Constants.ST, Constants.ONE_BYTE_SIZE))
+        stream_zero.addSensor(Sensor(Constants.GYROSCOPE, Constants.ST, Constants.ONE_BYTE_SIZE))
 
         self.streams.append(stream_zero)
 

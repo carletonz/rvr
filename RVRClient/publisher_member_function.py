@@ -28,7 +28,7 @@ class MinimalPublisher(Node):
 
     def __init__(self, rvrClient):
         super().__init__('minimal_publisher')
-        self.publisherImuSensor = self.create_publisher(Float32MultiArray, Constants.SENSOR_TO_NAME[Constants.IMU], 10)
+        self.publisherImuSensor = self.create_publisher(Float32MultiArray, Constants.SENSOR_TO_NAME[Constants.GYROSCOPE], 10)
         self.rvrClient = rvrClient
         self.sensors = SensorService(rvrClient)
         rvrClient.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
@@ -43,7 +43,7 @@ class MinimalPublisher(Node):
             print(packets[0])
             self.sensors.processPacket(packets[0])
 
-        if Sensor.ActiveSensors[(Constants.IMU, Constants.ST)]:
+        if Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)]:
             msg = Float32MultiArray()
             print(Sensor.ActiveSensors[(Constants.IMU, Constants.ST)].decodedData)
             msg.data = Sensor.ActiveSensors[(Constants.IMU, Constants.ST)].decodedData
