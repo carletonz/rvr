@@ -28,9 +28,9 @@ class MinimalPublisher(Node):
 
     def __init__(self, rvrClient):
         super().__init__('minimal_publisher')
+        self.rvrClient = rvrClient
         self.rvrClient.writePacket(RVRClient.getWakeCommandPacket())
         self.publisherImuSensor = self.create_publisher(Float32MultiArray, Constants.SENSOR_TO_NAME[Constants.GYROSCOPE], 10)
-        self.rvrClient = rvrClient
         self.sensors = SensorService(rvrClient)
         rvrClient.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
         self.sensors.start()
