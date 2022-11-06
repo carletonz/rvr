@@ -38,13 +38,13 @@ DEVICE_SENSOR = 0x18
 DEVICE_CONNECTION = 0x19
 DEVICE_IO = 0x1a
 DEVICE_TO_NAME = {
-    DEVICE_API_AND_SHELL: "API and Shell",
-    DEVICE_SYSTEM_INFO: "System Info",
-    DEVICE_POWER: "Power",
-    DEVICE_DRIVE: "Drive",
-    DEVICE_SENSOR: "Sensor",
-    DEVICE_CONNECTION: "Connection",
-    DEVICE_IO: "IO"
+    DEVICE_API_AND_SHELL: "API and Shell ("+hex(DEVICE_API_AND_SHELL)+")",
+    DEVICE_SYSTEM_INFO: "System Info ("+hex(DEVICE_SYSTEM_INFO)+")",
+    DEVICE_POWER: "Power ("+hex(DEVICE_POWER)+")",
+    DEVICE_DRIVE: "Drive ("+hex(DEVICE_DRIVE)+")",
+    DEVICE_SENSOR: "Sensor ("+hex(DEVICE_SENSOR)+")",
+    DEVICE_CONNECTION: "Connection ("+hex(DEVICE_CONNECTION)+")",
+    DEVICE_IO: "IO ("+hex(DEVICE_IO)+")"
 }
 
 # Errors
@@ -120,7 +120,7 @@ SIZE_TO_MAX_VALUE = {
     FOUR_BYTE_SIZE: 4,
 }
 MAX_SENSORS_PER_STREAM = 5
-SENSOR_PUBLISH_RATE = [0x27, 0x10]  # 10000 milliseconds
+SENSOR_PUBLISH_RATE = [0x03, 0xe8]  # 1000 milliseconds
 
 # Motors
 MODE_OFF = 0X00

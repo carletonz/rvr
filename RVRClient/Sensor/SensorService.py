@@ -21,8 +21,10 @@ class SensorService:
         for stream in self.streams:
             sensorStreamConfigPacket = RVRClient.getConfigureSensorStreamPacket(stream.processor, stream.streamToken, stream.getSensorIds(), stream.getDataSizes())
             self.rvrClient.writePacket(sensorStreamConfigPacket)
-        sensorStreamStartPacket = RVRClient.getStartSensorStreamingPacket(Constants.ST)
-        self.rvrClient.writePacket(sensorStreamStartPacket)
+        self.rvrClient.writePacket(RVRClient.getStartSensorStreamingPacket(Constants.NORDIC))
+        self.rvrClient.writePacket(RVRClient.getStartSensorStreamingPacket(Constants.ST))
+        self.rvrClient.writePacket(RVRClient.getClearSensorStreamingPacket(Constants.NORDIC))
+        self.rvrClient.writePacket(RVRClient.getClearSensorStreamingPacket(Constants.ST))
 
     def processPacket(self, packet):
         return self.streams[packet.data[0]-1].decodeData(packet.data[1:])

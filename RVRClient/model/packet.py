@@ -94,7 +94,7 @@ class Packet:
         s += "Target: {0}\n".format(str(self.tid))
         s += "Source: {0}\n".format(str(self.sid))
         s += "Device: {0}\n".format(Constants.DEVICE_TO_NAME.get(self.did, "Unknown Device (" + str(self.did) + ")"))
-        s += "Command: {0}\n".format(str(self.cid))
+        s += "Command: {0}\n".format(str(self.cid) + " ({})".format(hex(self.cid) if self.cid else ""))
         s += "Sequence: {0}\n".format(str(self.seq))
         s += "Error: {0}\n".format(Constants.ERROR_TO_NAME.get(self.err, "Unknown Error (" + str(self.err) + ")"))
         s += "Data: {0}\n".format(str(self.data))

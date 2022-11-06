@@ -28,16 +28,16 @@ class MinimalPublisher(Node):
 
     def __init__(self, rvrClient):
         super().__init__('minimal_publisher')
+        self.rvrClient.writePacket(RVRClient.getWakeCommandPacket())
         self.publisherImuSensor = self.create_publisher(Float32MultiArray, Constants.SENSOR_TO_NAME[Constants.GYROSCOPE], 10)
         self.rvrClient = rvrClient
         self.sensors = SensorService(rvrClient)
         rvrClient.writePacket(RVRClient.getStopSensorStreamingPacket(Constants.ST))
         self.sensors.start()
-        timer_period = 10  # seconds
+        timer_period = 1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
     def timer_callback(self):
-        self.rvrClient.writePacket(RVRClient.getWakeCommandPacket())
         packets = self.rvrClient.readPackets(1)
         if len(packets) > 0 and packets[0].did == Constants.DEVICE_SENSOR and packets[0].seq != 0:
             print('sensor packet: [{}]'.format(', '.join('0x{:02x}'.format(x) for x in packets[0].getEncodedData())))
