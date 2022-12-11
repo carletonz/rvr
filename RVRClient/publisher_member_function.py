@@ -42,7 +42,7 @@ class MinimalPublisher(Node):
             print(packets[0])
             self.sensors.processPacket(packets[0])
 
-        if Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)]:
+        if (Constants.IMU, Constants.ST) in Sensor.ActiveSensors:
             msg = Float32MultiArray()
             print(Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)].decodedData)
             msg.data = Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)].decodedData
