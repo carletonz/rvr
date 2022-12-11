@@ -42,12 +42,14 @@ class MinimalPublisher(Node):
             print(packets[0])
             self.sensors.processPacket(packets[0])
 
-        if (Constants.IMU, Constants.ST) in Sensor.ActiveSensors:
-            msg = Float32MultiArray()
-            print(Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)].decodedData)
-            msg.data = Sensor.ActiveSensors[(Constants.GYROSCOPE, Constants.ST)].decodedData
-            self.publisherImuSensor.publish(msg)
+        self.publish_sensor_data((Constants.IMU, Constants.ST))
 
+    def publish_sensor_data(self, sensor):
+        if sensor in Sensor.ActiveSensors:
+            msg = Float32MultiArray()
+            print(Sensor.ActiveSensors[sensor].decodedData)
+            msg.data = Sensor.ActiveSensors[sensor].decodedData
+            self.publisherImuSensor.publish(msg)
 
 
 def getUartPort():
