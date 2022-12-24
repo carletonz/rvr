@@ -2,6 +2,7 @@ import RVRClient.constant as Constants
 
 
 class Packet:
+    sequenceCount = Constants.MIN_SEQUENCE_COUNT
     class Builder:
         def __init__(self):
             self._flags = 0
@@ -9,7 +10,7 @@ class Packet:
             self._sourceId = None
             self._deviceId = None
             self._commandId = None
-            self._sequence = 0
+            self._sequence = Packet.getSequenceCount()
             self._error = None
             self._data = []
 
@@ -73,6 +74,14 @@ class Packet:
                     (self._commandId is None or not Packet.isFlagSet(self._flags, Constants.IS_RESPONSE)):
                 raise ValueError("To use the request only error response flag a command id must be given and the is response flag must not be set")
             return Packet(self._flags, self._targetId, self._sourceId, self._deviceId, self._commandId, self._sequence, self._error, self._data)
+
+    @staticmethod
+    def getSequenceCount():
+        temp = Packet.sequenceCount
+        Packet.sequenceCount += 1
+        if Packet.sequenceCount == Constants.MAX_SEQUENCE_COUNT:
+            Packet.sequenceCount = Constants.MIN_SEQUENCE_COUNT
+        return temp
 
     def __init__(self, flags=0, tid=None, sid=None, did=None, cid=None, seq=0, err=None, data=[]):
         if flags is None:
