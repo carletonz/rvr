@@ -34,6 +34,8 @@ class RVRClient:
                 with self.readLock:
                     raw_data = self.serialPort.read_until(bytearray([Constants.END_BYTE]))
                 try:
+                    if self.debugLog:
+                        print('Read bytes: [{}]'.format(', '.join('0x{:02x}'.format(x) for x in raw_data)))
                     start_index = raw_data.index(Constants.START_BYTE)
                     decoded_data = Packet.decodeData(bytearray(raw_data[start_index:]))
                     output.append(decoded_data)
@@ -48,7 +50,6 @@ class RVRClient:
             .tid(Constants.NORDIC) \
             .did(Constants.DEVICE_POWER) \
             .cid(0x0d) \
-            .requestResponseFlag() \
             .activityFlag() \
             .build()
 
