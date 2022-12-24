@@ -33,7 +33,7 @@ class MinimalPublisher(Node):
         self.publisherImuSensor = self.create_publisher(Float32MultiArray, Constants.SENSOR_TO_NAME[Constants.GYROSCOPE], 10)
         self.sensors = SensorService(rvrClient)
         self.sensors.start()
-        timer_period = 0.5  # seconds
+        timer_period = 0.25  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
     def timer_callback(self):
