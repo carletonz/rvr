@@ -39,7 +39,7 @@ class MinimalPublisher(Node):
     def timer_callback(self):
         packets = self.rvrClient.readPackets(1)
         if len(packets) > 0 and packets[0].did == Constants.DEVICE_SENSOR and packets[0].seq != 0:
-            print(packets[0])
+            # print(packets[0])
             self.sensors.processPacket(packets[0])
 
         self.publish_sensor_data((Constants.IMU, Constants.ST))
@@ -59,7 +59,7 @@ def getUartPort():
 
 def main(args=None):
     rclpy.init(args=args)
-    rvr = RVRClient(getUartPort(), True)
+    rvr = RVRClient(getUartPort(), False)
     minimal_publisher = MinimalPublisher(rvr)
 
     rclpy.spin(minimal_publisher)
